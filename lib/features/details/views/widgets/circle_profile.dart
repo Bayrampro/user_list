@@ -1,45 +1,45 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class CircleProfile extends StatelessWidget {
+  final String firstName;
+  final String lastName;
+
   const CircleProfile({
     super.key,
     required this.firstName,
     required this.lastName,
-    required this.email,
-    required this.imgUrl,
   });
-
-  final String firstName;
-  final String lastName;
-  final String email;
-  final String imgUrl;
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return SliverToBoxAdapter(
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+        child: Row(
           children: [
-            CircleAvatar(
-              radius: 60,
-              backgroundImage: CachedNetworkImageProvider(imgUrl),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const CircleAvatar(
+                  radius: 75,
+                  backgroundImage: AssetImage('assets/avatar.avif'),
+                ),
+                const SizedBox(height: 12.0),
+                Text(
+                  firstName,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                Text(
+                  lastName,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium!
+                      .copyWith(fontSize: 22),
+                ),
+              ],
             ),
             const SizedBox(height: 16),
-            Text(
-              '$firstName $lastName',
-              style: theme.textTheme.bodyLarge
-                  ?.copyWith(color: theme.primaryColor),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              email,
-              style: theme.textTheme.titleMedium?.copyWith(
-                  color: theme.primaryColor, fontWeight: FontWeight.w300),
-            ),
           ],
         ),
       ),

@@ -16,7 +16,7 @@ final class UserListLoaded extends UserListState {
     required this.userList,
   });
 
-  final UserList userList;
+  final List<User> userList;
 
   @override
   List<Object> get props => [userList];

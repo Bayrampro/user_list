@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:user_list/features/api/models/address.dart';
 
 part 'user.g.dart';
 
@@ -6,19 +7,18 @@ part 'user.g.dart';
 class User {
   final int id;
   final String email;
-  @JsonKey(name: 'first_name')
-  final String firstName;
-  @JsonKey(name: 'last_name')
-  final String lastName;
-  @JsonKey(name: 'avatar')
-  final String imgUrl;
+  final String name;
+  final String username;
+  final Address address;
+  final String phone;
 
   User({
     required this.id,
     required this.email,
-    required this.firstName,
-    required this.lastName,
-    required this.imgUrl,
+    required this.name,
+    required this.username,
+    required this.address,
+    required this.phone,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

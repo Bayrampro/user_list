@@ -16,7 +16,7 @@ final class DetailsLoaded extends DetailsState {
     required this.user,
   });
 
-  final UserDetails user;
+  final User user;
 
   @override
   List<Object> get props => [user];

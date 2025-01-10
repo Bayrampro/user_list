@@ -1,6 +1,6 @@
 enum Confidential {
   baseUrl(
-    'https://reqres.in/api',
+    'https://jsonplaceholder.typicode.com/',
   );
 
   const Confidential(this.value);

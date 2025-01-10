@@ -1,24 +1,24 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:user_list/providers/theme_provider.dart';
 
-class UserCard extends StatelessWidget {
+class UserCard extends ConsumerWidget {
   const UserCard({
     super.key,
     required this.firstName,
     required this.lastName,
-    required this.imgUrl,
     required this.id,
   });
 
   final String firstName;
   final String lastName;
-  final String imgUrl;
   final int id;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final isDarkMode = ref.watch(themeProvider);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -29,31 +29,24 @@ class UserCard extends StatelessWidget {
         child: GestureDetector(
           onTap: () => context.go('/details/$id'),
           child: ListTile(
-            leading: CachedNetworkImage(
-              imageUrl: imgUrl,
-              imageBuilder: (context, imageProvider) => CircleAvatar(
-                radius: 30,
-                backgroundImage: imageProvider,
-              ),
-              placeholder: (context, url) => const CircularProgressIndicator(),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
+            leading: const CircleAvatar(
+              radius: 30,
+              foregroundImage: AssetImage('assets/avatar.avif'),
             ),
             title: Text(
               '$firstName $lastName',
-              style: theme.textTheme.titleMedium
-                  ?.copyWith(color: theme.primaryColor),
+              style: theme.textTheme.titleMedium,
             ),
             subtitle: Text(
-              'Go to details',
-              style: theme.textTheme.titleSmall
-                  ?.copyWith(color: theme.primaryColor),
+              'Посмотреть',
+              style: theme.textTheme.titleSmall,
             ),
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             trailing: IconButton(
               icon: Icon(
                 Icons.arrow_circle_right_outlined,
-                color: theme.primaryColor,
+                color: isDarkMode ? theme.canvasColor : theme.primaryColor,
               ),
               onPressed: () => context.go('/details/$id'),
             ),

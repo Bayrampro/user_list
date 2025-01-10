@@ -1,16 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
-import 'package:user_list/features/api/models/models.dart';
+import 'package:user_list/features/api/models/user.dart';
 
 part 'api.g.dart';
 
-@RestApi(baseUrl: 'https://reqres.in/api')
+@RestApi(baseUrl: 'https://jsonplaceholder.typicode.com/')
 abstract class UserListClient {
   factory UserListClient(Dio dio, {String baseUrl}) = _UserListClient;
 
   @GET('/users')
-  Future<UserList> getUsers();
+  Future<List<User>> getUsers();
 
   @GET('/users/{id}')
-  Future<UserDetails> getUserDetails(@Path('id') int id);
+  Future<User> getUserDetails(@Path('id') int id);
 }

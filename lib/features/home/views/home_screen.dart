@@ -25,19 +25,38 @@ class _HomeScreenState extends State<HomeScreen> {
           const CustomAppBar(),
           BlocBuilder<UserListBloc, UserListState>(
             builder: (context, state) {
-              if (state is UserListLoaded) {
+              if (state is UserListError) {
+                return SliverFillRemaining(
+                  child: Center(
+                    child: Column(
+                      spacing: 12.0,
+                      children: [
+                        const Icon(
+                          Icons.dangerous,
+                          color: Colors.red,
+                          size: 50,
+                        ),
+                        Text(
+                          'Произошла ошибка!',
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              } else if (state is UserListLoaded) {
                 return SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (BuildContext context, int index) {
-                      final user = state.userList.data[index];
+                      final users = state.userList;
+                      users.sort((a, b) => a.name.compareTo(b.name));
                       return UserCard(
-                        firstName: user.firstName,
-                        lastName: user.lastName,
-                        imgUrl: user.imgUrl,
-                        id: user.id,
+                        firstName: users[index].name,
+                        lastName: users[index].username,
+                        id: users[index].id,
                       );
                     },
-                    childCount: state.userList.data.length,
+                    childCount: state.userList.length,
                   ),
                 );
               } else {
